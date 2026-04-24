@@ -10,6 +10,17 @@ export interface Post {
   project: ProjectSlug
   title: string
   content: string
+  image_url: string | null
   created_at: string
   author_id: string | null
+}
+
+export interface Resource {
+  id: string
+  title: string
+  description: string | null
+  url: string
+  icon: string
+  badge: string | null
+  created_at: string
 }

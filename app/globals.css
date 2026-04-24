@@ -7,10 +7,20 @@
   --font-mono: 'JetBrains Mono', monospace;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; }
 
-body {
-  -webkit-font-smoothing: antialiased;
+/* Markdown prose — dark theme overrides */
+.prose-blog {
+  @apply prose prose-invert max-w-none;
+  @apply prose-p:text-[#c8cfe0] prose-p:leading-relaxed;
+  @apply prose-headings:text-white prose-headings:font-bold;
+  @apply prose-strong:text-white;
+  @apply prose-a:text-indigo-400 prose-a:no-underline hover:prose-a:underline;
+  @apply prose-code:text-indigo-300 prose-code:bg-[#1b1f2b] prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none;
+  @apply prose-pre:bg-[#1b1f2b] prose-pre:border prose-pre:border-[#252a38] prose-pre:rounded-xl;
+  @apply prose-blockquote:border-indigo-500 prose-blockquote:text-muted;
+  @apply prose-hr:border-[#252a38];
+  @apply prose-li:text-[#c8cfe0];
+  @apply prose-img:rounded-xl prose-img:border prose-img:border-[#252a38];
 }

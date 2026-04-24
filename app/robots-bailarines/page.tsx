@@ -3,36 +3,28 @@ import UpdatesFeed from '@/components/UpdatesFeed'
 export const metadata = { title: 'Robots Bailarines 2.0 — GPT Blog' }
 
 const stack = [
-  { layer: 'Embebido', tech: 'C++ / Arduino', rol: 'Firmware en ESP32' },
-  { layer: 'Embebido', tech: 'ESP32', rol: 'BLE 4.2 + Wi-Fi, control de servos' },
-  { layer: 'Embebido', tech: 'SG90 Servomotores', rol: 'Articulaciones del robot' },
-  { layer: 'Frontend', tech: 'React + Vite', rol: 'SPA / PWA' },
+  { layer: 'Frontend', tech: 'React 18 + Vite', rol: 'SPA / PWA' },
   { layer: 'Frontend', tech: 'TypeScript', rol: 'Tipado estático' },
   { layer: 'Frontend', tech: 'Tailwind CSS + shadcn/ui', rol: 'Estilos y componentes' },
   { layer: 'Frontend', tech: 'Zustand', rol: 'Estado global' },
   { layer: 'Frontend', tech: 'Workbox + vite-plugin-pwa', rol: 'Service worker / offline' },
-  { layer: 'Backend', tech: 'Node.js + Express', rol: 'API REST' },
+  { layer: 'Frontend', tech: 'Web Bluetooth API', rol: 'Comunicación directa con ESP32 vía BLE' },
+  { layer: 'Backend', tech: 'Node.js + Express', rol: 'API REST + WebSocket' },
   { layer: 'Backend', tech: 'TypeScript', rol: 'Tipado estático' },
-  { layer: 'Backend', tech: 'SQLite', rol: 'Persistencia de coreografías' },
-  { layer: 'DevOps', tech: 'Docker + Compose', rol: 'Contenedores' },
-  { layer: 'DevOps', tech: 'Nginx Proxy Manager', rol: 'Reverse proxy' },
-  { layer: 'DevOps', tech: "Let's Encrypt", rol: 'Certificado HTTPS' },
-  { layer: 'DevOps', tech: 'GitHub Actions', rol: 'CI/CD' },
+  { layer: 'Backend', tech: 'SQLite', rol: 'Persistencia de coreografías y configuraciones' },
+  { layer: 'Embebido', tech: 'ESP32', rol: 'BLE GATT + Wi-Fi, control de servos' },
+  { layer: 'Embebido', tech: 'C++ / Arduino', rol: 'Firmware: lectura de sensores, control PWM' },
+  { layer: 'Embebido', tech: 'SG90 Servomotores (×4)', rol: 'Articulaciones del robot' },
+  { layer: 'DevOps', tech: 'Docker + Compose', rol: 'Contenerización de servicios' },
+  { layer: 'DevOps', tech: 'Nginx Proxy Manager', rol: 'Reverse proxy + gestión SSL' },
+  { layer: 'DevOps', tech: "Let's Encrypt", rol: 'Certificados HTTPS' },
+  { layer: 'DevOps', tech: 'GitHub Actions', rol: 'CI/CD para build y despliegue' },
 ]
 
 const hardware = [
-  { icon: '📡', name: 'ESP32', desc: 'Microcontrolador dual-core con BLE 4.2 + Wi-Fi 802.11 b/g/n. Ejecuta el firmware de control de servos y la capa BLE.' },
-  { icon: '⚙️', name: 'Servomotor SG90', desc: 'Servo de 9 g, 180° de rotación. Bajo costo y torque suficiente para articulaciones del robot de baile.' },
-  { icon: '🔌', name: 'Shield / Protoboard', desc: 'Shield de expansión para distribución de alimentación y señales PWM hacia los servos.' },
-]
-
-const budget = [
-  { item: 'ESP32 (módulo)', cost: '$3.882 CLP', freq: 'Por unidad' },
-  { item: 'Dominio web', cost: '$1.050 CLP', freq: 'Anual' },
-  { item: 'VPS (servidor)', cost: '$5.000 – $7.000 CLP', freq: 'Mensual' },
-  { item: 'Shield de expansión', cost: '$3.500 CLP', freq: 'Por unidad' },
-  { item: 'Protoboard', cost: '$2.500 CLP', freq: 'Por unidad' },
-  { item: 'Cables Dupont / jumper', cost: '$2.000 CLP', freq: 'Por set' },
+  { icon: '📡', name: 'ESP32', desc: 'Microcontrolador dual-core con BLE 4.2 GATT + Wi-Fi 802.11 b/g/n. Ejecuta el firmware de control de servos y expone un servidor BLE para la PWA.' },
+  { icon: '⚙️', name: 'Servomotor SG90 ×4', desc: 'Servo de 9 g, 180° de rotación. Controlado por señales PWM desde el ESP32. Batería de litio 3.7V integrada.' },
+  { icon: '🔌', name: 'Shield / Protoboard', desc: 'Shield de expansión para distribución de alimentación y señales PWM. Wi-Fi + BLE integrado en el ESP32.' },
 ]
 
 export default function RobotsBailariinesPage() {
@@ -42,15 +34,11 @@ export default function RobotsBailariinesPage() {
       <div className="relative overflow-hidden border-b border-border px-6 pb-14 pt-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_100%_at_0%_50%,rgba(99,102,241,0.14),transparent_60%)]" />
         <div className="relative mx-auto max-w-5xl">
-          <span className="font-mono text-xs font-bold uppercase tracking-[.15em] text-muted">
-            Proyecto 1
-          </span>
-          <h1 className="mt-3 text-4xl font-extrabold text-white">
-            🤖 Robots Bailarines 2.0
-          </h1>
+          <span className="font-mono text-xs font-bold uppercase tracking-[.15em] text-muted">Proyecto 1</span>
+          <h1 className="mt-3 text-4xl font-extrabold text-white">🤖 Robots Bailarines 2.0</h1>
           <p className="mt-4 max-w-2xl text-base text-muted">
-            Sistema embebido con ESP32 + servomotores SG90 controlado vía BLE desde una PWA
-            full-stack. Diseña y ejecuta coreografías en robots físicos en tiempo real.
+            Sistema embebido con ESP32 + BLE GATT y una PWA full-stack para coreografiar robots
+            con servomotores SG90 en tiempo real.
           </p>
           <a
             href="https://trello.com/b/8ntwH00X/robots-bailarines-gpt"
@@ -70,17 +58,24 @@ export default function RobotsBailariinesPage() {
           <SectionTitle>Descripción</SectionTitle>
           <div className="space-y-3 text-sm leading-relaxed text-muted">
             <p>
-              <strong className="text-[#e2e6f0]">Robots Bailarines 2.0</strong> es una plataforma que
-              permite diseñar y ejecutar coreografías en robots físicos de bajo costo construidos sobre
-              módulos ESP32 y servomotores SG90. La interfaz web (PWA) se comunica con cada robot a
-              través de <em className="text-[#e2e6f0]">Bluetooth Low Energy</em>, sin drivers ni apps nativas.
+              <strong className="text-[#e2e6f0]">Robots Bailarines 2.0</strong> es una plataforma
+              que permite diseñar y ejecutar coreografías en robots físicos de bajo costo construidos
+              sobre módulos ESP32 y servomotores SG90. La interfaz web (PWA) se comunica con cada
+              robot a través de <em className="text-[#e2e6f0]">Bluetooth Low Energy (GATT)</em>, sin
+              drivers ni aplicaciones nativas.
             </p>
             <p>
-              El sistema expone una REST API con backend Node.js/Express que persiste las coreografías en
-              SQLite, las sirve a la PWA y, a través del ESP32, ejecuta los movimientos. Todo el stack
-              corre en contenedores Docker detrás de Nginx con HTTPS (requerido por la Web Bluetooth API).
+              El backend expone una REST API + WebSocket para comunicación en tiempo real. Las
+              coreografías se persisten en SQLite y se ejecutan en el ESP32 vía comandos BLE. Todo
+              el stack corre en contenedores Docker detrás de Nginx con HTTPS.
             </p>
           </div>
+        </section>
+
+        {/* ÚLTIMOS AVANCES */}
+        <section>
+          <SectionTitle>Últimos Avances</SectionTitle>
+          <UpdatesFeed project="robots-bailarines" limit={3} showMoreHref="#avances" />
         </section>
 
         {/* STACK */}
@@ -90,9 +85,7 @@ export default function RobotsBailariinesPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-bg3">
-                  <Th>Capa</Th>
-                  <Th>Tecnología</Th>
-                  <Th>Rol</Th>
+                  <Th>Capa</Th><Th>Tecnología</Th><Th>Rol</Th>
                 </tr>
               </thead>
               <tbody>
@@ -129,50 +122,46 @@ export default function RobotsBailariinesPage() {
         {/* ARQUITECTURA */}
         <section>
           <SectionTitle>Arquitectura General</SectionTitle>
-          <div className="rounded-xl border border-border bg-bg2 p-6">
-            <div className="flex flex-wrap items-center gap-3">
-              <ArchBox color="indigo" label="PWA" sub="React + Vite" />
-              <Arrow label="HTTPS ⟷" />
-              <ArchBox color="emerald" label="API REST" sub="Express + SQLite" />
+          <div className="rounded-xl border border-border bg-bg2 p-6 text-sm">
+
+            {/* Row 1: Frontend ↔ Backend ↔ DB */}
+            <div className="grid grid-cols-3 gap-3">
+              <ArchCard color="indigo" title="Frontend (PWA)" items={['React 18, Vite', 'TypeScript, Tailwind', 'Web Bluetooth API']} />
+              <ArchCard color="emerald" title="Backend (API)" items={['Node.js + Express', 'REST API + WebSocket', 'Autenticación y robots']} />
+              <ArchCard color="violet" title="Base de Datos" items={['SQLite', 'Coreografías', 'Configuraciones']} />
             </div>
-            <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-border pt-4">
-              <ArchBox color="slate" label="Nginx + Docker" sub="Let's Encrypt" />
-              <Arrow label="BLE ⟷" />
-              <ArchBox color="amber" label="ESP32" sub="C++ / Arduino" />
-              <Arrow label="PWM →" />
-              <ArchBox color="rose" label="SG90 ×N" sub="Servomotores" />
+
+            {/* Connectors row 1 */}
+            <div className="my-2 grid grid-cols-3 gap-3 text-center font-mono text-xs text-muted">
+              <div className="flex flex-col items-center gap-0.5">
+                <span>HTTP(S) REST API →</span>
+                <span>← JSON</span>
+                <span>WebSocket ⟷</span>
+              </div>
+              <div className="flex flex-col items-center gap-0.5">
+                <span>← SQL →</span>
+              </div>
+              <div />
             </div>
+
+            {/* Row 2: Infra + ESP32 + Servos */}
+            <div className="grid grid-cols-3 gap-3">
+              <ArchCard color="slate" title="Infraestructura (DevOps)" items={['Docker + Compose', 'Nginx Proxy Manager', "Let's Encrypt, GitHub Actions"]} />
+              <ArchCard color="amber" title="Hardware (ESP32)" items={['C++, Arduino', 'BLE GATT (servidor)', '4× SG90, batería 3.7V']} />
+              <div className="flex flex-col justify-center gap-2 rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-center">
+                <p className="font-semibold text-rose-200">Comunicación</p>
+                <p className="font-mono text-xs text-rose-300/60">BLE GATT ⟷ PWA</p>
+                <p className="font-mono text-xs text-rose-300/60">HTTP/WS ⟷ Backend</p>
+                <p className="font-mono text-xs text-rose-300/60">PWM → Servos</p>
+              </div>
+            </div>
+
           </div>
         </section>
 
-        {/* PRESUPUESTO */}
-        <section>
-          <SectionTitle>Presupuesto Estimado</SectionTitle>
-          <div className="overflow-hidden rounded-xl border border-border">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="bg-bg3">
-                  <Th>Ítem</Th>
-                  <Th>Costo</Th>
-                  <Th>Frecuencia</Th>
-                </tr>
-              </thead>
-              <tbody>
-                {budget.map((row, i) => (
-                  <tr key={i} className="border-t border-border transition-colors hover:bg-bg3">
-                    <td className="px-4 py-3 text-[#e2e6f0]">{row.item}</td>
-                    <td className="px-4 py-3 font-mono font-semibold text-white">{row.cost}</td>
-                    <td className="px-4 py-3 text-muted">{row.freq}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        {/* AVANCES */}
-        <section>
-          <SectionTitle>Avances del Proyecto</SectionTitle>
+        {/* TODOS LOS AVANCES */}
+        <section id="avances">
+          <SectionTitle>Todos los Avances</SectionTitle>
           <UpdatesFeed project="robots-bailarines" />
         </section>
 
@@ -198,25 +187,31 @@ function Th({ children }: { children: React.ReactNode }) {
   )
 }
 
-const archColors: Record<string, string> = {
-  indigo: 'border-indigo-500/40 bg-indigo-500/10 text-indigo-200',
-  emerald: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-200',
-  slate: 'border-slate-500/40 bg-slate-500/10 text-slate-200',
-  amber: 'border-amber-500/40 bg-amber-500/10 text-amber-200',
-  rose: 'border-rose-500/40 bg-rose-500/10 text-rose-200',
+const cardColors: Record<string, string> = {
+  indigo: 'border-indigo-500/30 bg-indigo-500/10',
+  emerald: 'border-emerald-500/30 bg-emerald-500/10',
+  violet: 'border-violet-500/30 bg-violet-500/10',
+  amber: 'border-amber-500/30 bg-amber-500/10',
+  slate: 'border-slate-500/30 bg-slate-500/10',
 }
 
-function ArchBox({ color, label, sub }: { color: string; label: string; sub: string }) {
+const titleColors: Record<string, string> = {
+  indigo: 'text-indigo-300',
+  emerald: 'text-emerald-300',
+  violet: 'text-violet-300',
+  amber: 'text-amber-300',
+  slate: 'text-slate-300',
+}
+
+function ArchCard({ color, title, items }: { color: string; title: string; items: string[] }) {
   return (
-    <div
-      className={`min-w-[120px] rounded-lg border px-4 py-3 text-center ${archColors[color]}`}
-    >
-      <p className="font-semibold">{label}</p>
-      <p className="font-mono text-xs opacity-60">{sub}</p>
+    <div className={`rounded-xl border p-4 ${cardColors[color]}`}>
+      <p className={`mb-2 text-xs font-bold ${titleColors[color]}`}>{title}</p>
+      <ul className="space-y-1">
+        {items.map((item) => (
+          <li key={item} className="text-xs text-muted">· {item}</li>
+        ))}
+      </ul>
     </div>
   )
-}
-
-function Arrow({ label }: { label: string }) {
-  return <span className="font-mono text-xs text-muted">{label}</span>
 }

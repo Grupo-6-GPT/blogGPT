@@ -3,40 +3,35 @@ import UpdatesFeed from '@/components/UpdatesFeed'
 export const metadata = { title: 'PWA LEGO WeDo 2.0 — GPT Blog' }
 
 const stack = [
-  { layer: 'Hardware', tech: 'LEGO WeDo 2.0 Hub', rol: 'Concentrador BLE central (GATT periférico)' },
-  { layer: 'Hardware', tech: 'Motor WeDo 2.0', rol: 'Actuador de movimiento' },
-  { layer: 'Hardware', tech: 'Sensor de movimiento', rol: 'Detección de distancia por IR' },
-  { layer: 'Hardware', tech: 'Sensor de inclinación', rol: 'Orientación espacial del hub' },
-  { layer: 'Hardware', tech: 'LED RGB (hub)', rol: 'Indicador de estado controlable' },
-  { layer: 'Conectividad', tech: 'BLE ~10 m', rol: 'Enlace inalámbrico hub ↔ navegador' },
-  { layer: 'Frontend', tech: 'React + Vite', rol: 'SPA / PWA' },
+  { layer: 'Frontend', tech: 'React 18 + Vite', rol: 'SPA / PWA' },
   { layer: 'Frontend', tech: 'TypeScript', rol: 'Tipado estático' },
   { layer: 'Frontend', tech: 'Tailwind CSS + shadcn/ui', rol: 'Estilos y componentes' },
   { layer: 'Frontend', tech: 'Zustand', rol: 'Estado global' },
   { layer: 'Frontend', tech: 'Workbox + vite-plugin-pwa', rol: 'Service worker / offline' },
-  { layer: 'Frontend', tech: 'Web Bluetooth API', rol: 'Comunicación directa con el hub' },
-  { layer: 'Backend', tech: 'Node.js + Express', rol: 'API REST' },
+  { layer: 'Frontend', tech: 'Web Bluetooth API', rol: 'Conexión opcional directa al hub LEGO' },
+  { layer: 'Backend', tech: 'Node.js + Express', rol: 'API REST + WebSocket (tiempo real)' },
   { layer: 'Backend', tech: 'TypeScript', rol: 'Tipado estático' },
-  { layer: 'Backend', tech: 'SQLite', rol: 'Persistencia de sesiones / logs' },
-  { layer: 'DevOps', tech: 'Docker + Compose', rol: 'Contenedores' },
-  { layer: 'DevOps', tech: 'Nginx Proxy Manager', rol: 'Reverse proxy' },
-  { layer: 'DevOps', tech: "Let's Encrypt", rol: 'HTTPS (requerido por Web BT API)' },
-  { layer: 'DevOps', tech: 'GitHub Actions', rol: 'CI/CD' },
+  { layer: 'Backend', tech: 'SQLite', rol: 'Usuarios, hubs, acciones, configuraciones, logs' },
+  { layer: 'Hardware', tech: 'LEGO WeDo 2.0 Hub', rol: 'Concentrador BLE GATT central' },
+  { layer: 'Hardware', tech: 'SDK en Python', rol: 'Control de alto nivel, API del robot LEGO, Bluetooth' },
+  { layer: 'Hardware', tech: 'Firmware C++ (Arduino)', rol: 'Control de motores, lectura de sensores, comms bajo nivel' },
+  { layer: 'Hardware', tech: 'Motor WeDo 2.0', rol: 'Actuador de movimiento con encoder' },
+  { layer: 'Hardware', tech: 'Sensor de movimiento', rol: 'Detección de distancia por IR' },
+  { layer: 'Hardware', tech: 'Sensor de inclinación', rol: 'Orientación espacial del hub' },
+  { layer: 'Hardware', tech: 'LED RGB (hub)', rol: 'Indicador de estado controlable por BLE' },
+  { layer: 'DevOps', tech: 'Docker + Compose', rol: 'Contenerización de servicios' },
+  { layer: 'DevOps', tech: 'Nginx Proxy Manager', rol: 'Reverse proxy y gestión SSL' },
+  { layer: 'DevOps', tech: "Let's Encrypt", rol: 'Certificados HTTPS (requerido por Web BT API)' },
+  { layer: 'DevOps', tech: 'GitHub Actions', rol: 'CI/CD para build y despliegue' },
 ]
 
 const hardware = [
-  { icon: '🧠', name: 'Hub WeDo 2.0', desc: 'Concentrador BLE 4.0 con 2 puertos de E/S y batería integrada. Actúa como dispositivo GATT periférico (rango ~10 m).' },
-  { icon: '🔁', name: 'Motor WeDo 2.0', desc: 'Motor DC con encoder. Velocidad y dirección controladas por el hub vía comandos BLE desde la PWA.' },
-  { icon: '📏', name: 'Sensor de Movimiento', desc: 'Sensor de distancia por infrarrojos. Devuelve lecturas de proximidad para disparar eventos en la app.' },
-  { icon: '📐', name: 'Sensor de Inclinación', desc: 'Detecta orientación (plano, inclinado, arriba/abajo) para acciones contextuales en la PWA.' },
-  { icon: '💡', name: 'LED RGB (hub)', desc: 'LED integrado en el hub controlable por BLE. Sirve como indicador visual de estado desde la PWA.' },
-]
-
-const budget = [
-  { item: 'Hardware LEGO WeDo 2.0', cost: '$0 CLP', freq: 'Proporcionado por el profesor', free: true },
-  { item: 'Dominio web', cost: '$1.000 CLP', freq: 'Anual', free: false },
-  { item: 'VPS (servidor)', cost: '$5.000 – $7.000 CLP', freq: 'Mensual', free: false },
-  { item: "Certificado SSL (Let's Encrypt)", cost: '$0 CLP', freq: 'Gratuito / automático', free: true },
+  { icon: '🧠', name: 'Hub WeDo 2.0', desc: 'Concentrador BLE 4.0 GATT con 2 puertos de E/S y batería integrada. Rango ~10 m. Dispositivo periférico del sistema.' },
+  { icon: '🐍', name: 'SDK en Python', desc: 'Control de alto nivel del robot: API del hub LEGO, gestión de conexión Bluetooth y envío de comandos estructurados.' },
+  { icon: '⚡', name: 'Firmware C++ (Arduino)', desc: 'Capa de bajo nivel: control de motores, lectura de sensores (movimiento/inclinación) y comunicación con el hub.' },
+  { icon: '🔁', name: 'Motor WeDo 2.0', desc: 'Motor DC con encoder. Velocidad y dirección controladas desde la PWA vía backend.' },
+  { icon: '📏', name: 'Sensor de Movimiento', desc: 'Sensor IR de proximidad. Retorna lecturas para disparar eventos en la aplicación web.' },
+  { icon: '💡', name: 'LED RGB (hub)', desc: 'LED integrado en el hub. Color controlable por BLE, sirve como indicador visual de estado.' },
 ]
 
 export default function LegoWedoPage() {
@@ -46,15 +41,11 @@ export default function LegoWedoPage() {
       <div className="relative overflow-hidden border-b border-border px-6 pb-14 pt-20">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_100%_at_0%_50%,rgba(245,158,11,0.12),transparent_60%)]" />
         <div className="relative mx-auto max-w-5xl">
-          <span className="font-mono text-xs font-bold uppercase tracking-[.15em] text-muted">
-            Proyecto 2
-          </span>
-          <h1 className="mt-3 text-4xl font-extrabold text-white">
-            🧱 PWA LEGO WeDo 2.0
-          </h1>
+          <span className="font-mono text-xs font-bold uppercase tracking-[.15em] text-muted">Proyecto 2</span>
+          <h1 className="mt-3 text-4xl font-extrabold text-white">🧱 PWA LEGO WeDo 2.0</h1>
           <p className="mt-4 max-w-2xl text-base text-muted">
-            Aplicación web progresiva para controlar el hub LEGO WeDo 2.0 mediante la Web Bluetooth
-            API directamente desde el navegador — motores, sensores y LED RGB sin instalar nada.
+            Aplicación web progresiva para controlar el hub LEGO WeDo 2.0 — motores, sensores
+            y LED RGB desde el navegador mediante Web Bluetooth API y backend en tiempo real.
           </p>
         </div>
       </div>
@@ -67,16 +58,24 @@ export default function LegoWedoPage() {
           <div className="space-y-3 text-sm leading-relaxed text-muted">
             <p>
               <strong className="text-[#e2e6f0]">PWA LEGO WeDo 2.0</strong> aprovecha la{' '}
-              <em className="text-[#e2e6f0]">Web Bluetooth API</em> del navegador para conectarse
-              directamente al hub sin software intermedio. Desde la PWA se controlan motores,
-              se leen los sensores de movimiento e inclinación, y se cambia el color del LED RGB.
+              <em className="text-[#e2e6f0]">Web Bluetooth API</em> del navegador para conectarse al
+              hub y enviar comandos en tiempo real sin instalar nada. El backend Node.js expone una
+              REST API y un canal <em className="text-[#e2e6f0]">WebSocket</em> para telemetría y
+              estado del robot.
             </p>
             <p>
-              La arquitectura sigue el mismo patrón del ramo: frontend React/Vite como PWA, backend
-              Express/SQLite, y DevOps en Docker con HTTPS obligatorio (requerido por la Web BT API).
-              El hardware fue proporcionado íntegramente por el profesor — costo de componentes: <strong className="text-green-400">$0</strong>.
+              El hardware combina un <em className="text-[#e2e6f0]">SDK en Python</em> para control
+              de alto nivel con un <em className="text-[#e2e6f0]">firmware C++ (Arduino)</em> para la
+              capa de bajo nivel (motores, sensores). El hardware fue proporcionado íntegramente por
+              el profesor.
             </p>
           </div>
+        </section>
+
+        {/* ÚLTIMOS AVANCES */}
+        <section>
+          <SectionTitle>Últimos Avances</SectionTitle>
+          <UpdatesFeed project="lego-wedo" limit={3} showMoreHref="#avances" />
         </section>
 
         {/* STACK */}
@@ -86,9 +85,7 @@ export default function LegoWedoPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-bg3">
-                  <Th>Capa</Th>
-                  <Th>Tecnología</Th>
-                  <Th>Rol</Th>
+                  <Th>Capa</Th><Th>Tecnología</Th><Th>Rol</Th>
                 </tr>
               </thead>
               <tbody>
@@ -121,62 +118,84 @@ export default function LegoWedoPage() {
             ))}
           </div>
           <p className="mt-4 rounded-xl border border-border bg-bg2 px-5 py-3 text-sm text-muted">
-            Todo el hardware fue proporcionado por el profesor.{' '}
-            <strong className="text-green-400">Costo de componentes: $0 CLP.</strong>
+            Todo el hardware fue proporcionado por el profesor.
           </p>
         </section>
 
         {/* ARQUITECTURA */}
         <section>
           <SectionTitle>Arquitectura General</SectionTitle>
-          <div className="rounded-xl border border-border bg-bg2 p-6">
-            <div className="flex flex-wrap items-center gap-3">
-              <ArchBox color="amber" label="PWA" sub="React + Vite" />
-              <Arrow label="HTTPS ⟷" />
-              <ArchBox color="emerald" label="API REST" sub="Express + SQLite" />
+          <div className="rounded-xl border border-border bg-bg2 p-6 text-sm">
+
+            {/* Row 1: Frontend ↔ Backend ↔ DB */}
+            <div className="grid grid-cols-3 gap-3">
+              <ArchCard color="amber" title="Frontend (Cliente Web)" items={[
+                'React 18, Vite, TypeScript',
+                'Tailwind CSS, shadcn/ui',
+                'Zustand, Workbox, PWA',
+                'Web Bluetooth (opcional)',
+              ]} />
+              <ArchCard color="emerald" title="Backend (API)" items={[
+                'Node.js + Express',
+                'REST API + WebSocket',
+                'Autenticación y usuarios',
+                'Gestión hubs / robots',
+                'Telemetría y estado',
+              ]} />
+              <ArchCard color="violet" title="Base de Datos" items={[
+                'SQLite',
+                'Usuarios',
+                'Hubs / Robots',
+                'Acciones guardadas',
+                'Historial / Logs',
+              ]} />
             </div>
-            <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-border pt-4">
-              <ArchBox color="slate" label="Nginx + Docker" sub="Let's Encrypt" />
-              <Arrow label="Web BT / BLE ⟷" />
-              <ArchBox color="amber" label="Hub WeDo 2.0" sub="BLE ~10 m" />
-              <Arrow label="→" />
-              <ArchBox color="rose" label="Motores + Sensores" sub="LED RGB" />
+
+            {/* Connectors */}
+            <div className="my-3 grid grid-cols-3 gap-3 text-center font-mono text-xs text-muted">
+              <div className="space-y-0.5">
+                <div>HTTP(S) REST API →</div>
+                <div>← JSON</div>
+                <div>WebSocket ⟷ (tiempo real)</div>
+              </div>
+              <div className="flex items-center justify-center">← SQL →</div>
+              <div />
             </div>
+
+            {/* Row 2: Infra + Hardware (2 layers) */}
+            <div className="grid grid-cols-3 gap-3">
+              <ArchCard color="slate" title="Infraestructura (DevOps)" items={[
+                'Docker + Compose',
+                'Nginx Proxy Manager',
+                "Let's Encrypt",
+                'GitHub Actions (CI/CD)',
+              ]} />
+              <div className="col-span-1 space-y-3">
+                <ArchCard color="orange" title="Hardware — SDK Python" items={[
+                  'Control de alto nivel',
+                  'API del robot LEGO',
+                  'Conexión Bluetooth',
+                ]} />
+                <ArchCard color="rose" title="Firmware C++ (Arduino)" items={[
+                  'Control de motores',
+                  'Lectura de sensores',
+                  'Comunicación bajo nivel',
+                ]} />
+              </div>
+              <div className="flex flex-col justify-center gap-2 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
+                <p className="text-xs font-bold text-amber-300">Conexiones Hardware</p>
+                <p className="font-mono text-xs text-muted">HTTP / WS ⟷ Backend</p>
+                <p className="font-mono text-xs text-muted">Web BT ⟷ PWA (opt.)</p>
+                <p className="font-mono text-xs text-muted">BLE ~10 m</p>
+              </div>
+            </div>
+
           </div>
         </section>
 
-        {/* PRESUPUESTO */}
-        <section>
-          <SectionTitle>Presupuesto Estimado</SectionTitle>
-          <div className="overflow-hidden rounded-xl border border-border">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="bg-bg3">
-                  <Th>Ítem</Th>
-                  <Th>Costo</Th>
-                  <Th>Frecuencia</Th>
-                </tr>
-              </thead>
-              <tbody>
-                {budget.map((row, i) => (
-                  <tr key={i} className="border-t border-border transition-colors hover:bg-bg3">
-                    <td className="px-4 py-3 text-[#e2e6f0]">{row.item}</td>
-                    <td
-                      className={`px-4 py-3 font-mono font-semibold ${row.free ? 'text-green-400' : 'text-white'}`}
-                    >
-                      {row.cost}
-                    </td>
-                    <td className="px-4 py-3 text-muted">{row.freq}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        {/* AVANCES */}
-        <section>
-          <SectionTitle>Avances del Proyecto</SectionTitle>
+        {/* TODOS LOS AVANCES */}
+        <section id="avances">
+          <SectionTitle>Todos los Avances</SectionTitle>
           <UpdatesFeed project="lego-wedo" />
         </section>
 
@@ -202,23 +221,33 @@ function Th({ children }: { children: React.ReactNode }) {
   )
 }
 
-const archColors: Record<string, string> = {
-  indigo: 'border-indigo-500/40 bg-indigo-500/10 text-indigo-200',
-  emerald: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-200',
-  slate: 'border-slate-500/40 bg-slate-500/10 text-slate-200',
-  amber: 'border-amber-500/40 bg-amber-500/10 text-amber-200',
-  rose: 'border-rose-500/40 bg-rose-500/10 text-rose-200',
+const cardColors: Record<string, string> = {
+  amber:  'border-amber-500/30 bg-amber-500/10',
+  emerald:'border-emerald-500/30 bg-emerald-500/10',
+  violet: 'border-violet-500/30 bg-violet-500/10',
+  slate:  'border-slate-500/30 bg-slate-500/10',
+  orange: 'border-orange-500/30 bg-orange-500/10',
+  rose:   'border-rose-500/30 bg-rose-500/10',
 }
 
-function ArchBox({ color, label, sub }: { color: string; label: string; sub: string }) {
+const titleColors: Record<string, string> = {
+  amber:  'text-amber-300',
+  emerald:'text-emerald-300',
+  violet: 'text-violet-300',
+  slate:  'text-slate-300',
+  orange: 'text-orange-300',
+  rose:   'text-rose-300',
+}
+
+function ArchCard({ color, title, items }: { color: string; title: string; items: string[] }) {
   return (
-    <div className={`min-w-[120px] rounded-lg border px-4 py-3 text-center ${archColors[color]}`}>
-      <p className="font-semibold">{label}</p>
-      <p className="font-mono text-xs opacity-60">{sub}</p>
+    <div className={`rounded-xl border p-4 ${cardColors[color]}`}>
+      <p className={`mb-2 text-xs font-bold ${titleColors[color]}`}>{title}</p>
+      <ul className="space-y-1">
+        {items.map((item) => (
+          <li key={item} className="text-xs text-muted">· {item}</li>
+        ))}
+      </ul>
     </div>
   )
-}
-
-function Arrow({ label }: { label: string }) {
-  return <span className="font-mono text-xs text-muted">{label}</span>
 }

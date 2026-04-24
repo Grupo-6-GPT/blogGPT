@@ -7,6 +7,7 @@ const links = [
   { href: '/robots-bailarines', label: 'Robots Bailarines 2.0' },
   { href: '/lego-wedo', label: 'LEGO WeDo 2.0' },
   { href: '/recursos', label: 'Recursos' },
+  { href: '/equipo', label: 'Equipo' },
 ]
 
 export default async function Nav() {
@@ -31,15 +32,24 @@ export default async function Nav() {
               {l.label}
             </Link>
           ))}
-          {user && (
+          {user ? (
+            <>
+              <Link
+                href="/admin"
+                className="ml-2 rounded-lg bg-indigo-600/20 px-3 py-1.5 text-sm font-medium text-indigo-400 transition-colors hover:bg-indigo-600/30"
+              >
+                Admin
+              </Link>
+              <NavAuthButton user={user} />
+            </>
+          ) : (
             <Link
-              href="/admin"
-              className="ml-2 rounded-lg bg-indigo-600/20 px-3 py-1.5 text-sm font-medium text-indigo-400 transition-colors hover:bg-indigo-600/30"
+              href="/login"
+              className="ml-2 rounded-lg border border-border px-3 py-1.5 text-sm text-muted transition-colors hover:bg-bg3 hover:text-white"
             >
-              Admin
+              Iniciar sesión
             </Link>
           )}
-          <NavAuthButton user={user} />
         </div>
       </div>
     </nav>

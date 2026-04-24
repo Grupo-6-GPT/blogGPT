@@ -1,3 +1,6 @@
+# claude code local config
+.claude/
+
 # deps
 /node_modules
 /.pnp
