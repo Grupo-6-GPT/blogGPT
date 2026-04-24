@@ -125,16 +125,20 @@ export default function LegoWedoPage() {
         {/* ARQUITECTURA */}
         <section>
           <SectionTitle>Arquitectura General</SectionTitle>
-          <div className="rounded-xl border border-border bg-bg2 p-6 text-sm">
+          <div className="space-y-2 rounded-xl border border-border bg-bg2 p-6 text-sm">
 
-            {/* Row 1: Frontend ↔ Backend ↔ DB */}
-            <div className="grid grid-cols-3 gap-3">
-              <ArchCard color="amber" title="Frontend (Cliente Web)" items={[
-                'React 18, Vite, TypeScript',
-                'Tailwind CSS, shadcn/ui',
-                'Zustand, Workbox, PWA',
-                'Web Bluetooth (opcional)',
-              ]} />
+            {/* Capa 1: Frontend */}
+            <ArchCard color="amber" title="Frontend (Cliente Web)" horizontal items={[
+              'React 18 + Vite · TypeScript',
+              'Tailwind CSS · shadcn/ui',
+              'Zustand · Workbox · PWA',
+              'Web Bluetooth API (opcional)',
+            ]} />
+
+            <FlowArrow label="HTTP(S) · REST API · WebSocket (tiempo real)" />
+
+            {/* Capa 2: Backend + DB */}
+            <div className="grid grid-cols-2 gap-3">
               <ArchCard color="emerald" title="Backend (API)" items={[
                 'Node.js + Express',
                 'REST API + WebSocket',
@@ -151,43 +155,30 @@ export default function LegoWedoPage() {
               ]} />
             </div>
 
-            {/* Connectors */}
-            <div className="my-3 grid grid-cols-3 gap-3 text-center font-mono text-xs text-muted">
-              <div className="space-y-0.5">
-                <div>HTTP(S) REST API →</div>
-                <div>← JSON</div>
-                <div>WebSocket ⟷ (tiempo real)</div>
-              </div>
-              <div className="flex items-center justify-center">← SQL →</div>
-              <div />
+            <FlowArrow label="HTTP / WebSocket · Comandos y Telemetría · BLE ~10 m" />
+
+            {/* Capa 3: Hardware (dos subcapas) */}
+            <div className="grid grid-cols-2 gap-3">
+              <ArchCard color="orange" title="Hardware — SDK Python (alto nivel)" items={[
+                'Control del robot LEGO',
+                'API Bluetooth',
+                'Gestión de conexión',
+              ]} />
+              <ArchCard color="rose" title="Firmware C++ Arduino (bajo nivel)" items={[
+                'Control de motores',
+                'Lectura de sensores IR / inclinación',
+                'Comunicación BLE GATT',
+              ]} />
             </div>
 
-            {/* Row 2: Infra + Hardware (2 layers) */}
-            <div className="grid grid-cols-3 gap-3">
-              <ArchCard color="slate" title="Infraestructura (DevOps)" items={[
+            {/* Capa 4: DevOps */}
+            <div className="border-t border-border pt-4">
+              <ArchCard color="slate" title="Infraestructura (DevOps)" horizontal items={[
                 'Docker + Compose',
                 'Nginx Proxy Manager',
                 "Let's Encrypt",
-                'GitHub Actions (CI/CD)',
+                'GitHub Actions · CI/CD',
               ]} />
-              <div className="col-span-1 space-y-3">
-                <ArchCard color="orange" title="Hardware — SDK Python" items={[
-                  'Control de alto nivel',
-                  'API del robot LEGO',
-                  'Conexión Bluetooth',
-                ]} />
-                <ArchCard color="rose" title="Firmware C++ (Arduino)" items={[
-                  'Control de motores',
-                  'Lectura de sensores',
-                  'Comunicación bajo nivel',
-                ]} />
-              </div>
-              <div className="flex flex-col justify-center gap-2 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
-                <p className="text-xs font-bold text-amber-300">Conexiones Hardware</p>
-                <p className="font-mono text-xs text-muted">HTTP / WS ⟷ Backend</p>
-                <p className="font-mono text-xs text-muted">Web BT ⟷ PWA (opt.)</p>
-                <p className="font-mono text-xs text-muted">BLE ~10 m</p>
-              </div>
             </div>
 
           </div>
@@ -239,15 +230,27 @@ const titleColors: Record<string, string> = {
   rose:   'text-rose-300',
 }
 
-function ArchCard({ color, title, items }: { color: string; title: string; items: string[] }) {
+function ArchCard({ color, title, items, horizontal = false }: {
+  color: string; title: string; items: string[]; horizontal?: boolean
+}) {
   return (
     <div className={`rounded-xl border p-4 ${cardColors[color]}`}>
       <p className={`mb-2 text-xs font-bold ${titleColors[color]}`}>{title}</p>
-      <ul className="space-y-1">
+      <ul className={horizontal ? 'flex flex-wrap gap-x-4 gap-y-1' : 'space-y-1'}>
         {items.map((item) => (
           <li key={item} className="text-xs text-muted">· {item}</li>
         ))}
       </ul>
+    </div>
+  )
+}
+
+function FlowArrow({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-2 px-2">
+      <div className="h-px flex-1 border-t border-dashed border-border" />
+      <span className="font-mono text-xs text-border">{label}</span>
+      <div className="h-px flex-1 border-t border-dashed border-border" />
     </div>
   )
 }

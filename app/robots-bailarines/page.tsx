@@ -122,38 +122,27 @@ export default function RobotsBailariinesPage() {
         {/* ARQUITECTURA */}
         <section>
           <SectionTitle>Arquitectura General</SectionTitle>
-          <div className="rounded-xl border border-border bg-bg2 p-6 text-sm">
+          <div className="rounded-xl border border-border bg-bg2 p-6 text-sm space-y-2">
 
-            {/* Row 1: Frontend ↔ Backend ↔ DB */}
-            <div className="grid grid-cols-3 gap-3">
-              <ArchCard color="indigo" title="Frontend (PWA)" items={['React 18, Vite', 'TypeScript, Tailwind', 'Web Bluetooth API']} />
-              <ArchCard color="emerald" title="Backend (API)" items={['Node.js + Express', 'REST API + WebSocket', 'Autenticación y robots']} />
-              <ArchCard color="violet" title="Base de Datos" items={['SQLite', 'Coreografías', 'Configuraciones']} />
+            {/* Capa 1: Frontend */}
+            <ArchCard color="indigo" title="Frontend (PWA)" horizontal items={['React 18 + Vite', 'TypeScript · Tailwind CSS', 'Web Bluetooth API', 'Zustand · Workbox · PWA']} />
+
+            <FlowArrow label="HTTP(S) · REST API · WebSocket" />
+
+            {/* Capa 2: Backend + DB en paralelo */}
+            <div className="grid grid-cols-2 gap-3">
+              <ArchCard color="emerald" title="Backend (API)" items={['Node.js + Express', 'REST API + WebSocket', 'Autenticación y coreografías', 'Telemetría y estado']} />
+              <ArchCard color="violet" title="Base de Datos" items={['SQLite', 'Coreografías', 'Configuraciones', 'Historial / Logs']} />
             </div>
 
-            {/* Connectors row 1 */}
-            <div className="my-2 grid grid-cols-3 gap-3 text-center font-mono text-xs text-muted">
-              <div className="flex flex-col items-center gap-0.5">
-                <span>HTTP(S) REST API →</span>
-                <span>← JSON</span>
-                <span>WebSocket ⟷</span>
-              </div>
-              <div className="flex flex-col items-center gap-0.5">
-                <span>← SQL →</span>
-              </div>
-              <div />
-            </div>
+            <FlowArrow label="HTTP · WebSocket · Comandos y Telemetría" />
 
-            {/* Row 2: Infra + ESP32 + Servos */}
-            <div className="grid grid-cols-3 gap-3">
-              <ArchCard color="slate" title="Infraestructura (DevOps)" items={['Docker + Compose', 'Nginx Proxy Manager', "Let's Encrypt, GitHub Actions"]} />
-              <ArchCard color="amber" title="Hardware (ESP32)" items={['C++, Arduino', 'BLE GATT (servidor)', '4× SG90, batería 3.7V']} />
-              <div className="flex flex-col justify-center gap-2 rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-center">
-                <p className="font-semibold text-rose-200">Comunicación</p>
-                <p className="font-mono text-xs text-rose-300/60">BLE GATT ⟷ PWA</p>
-                <p className="font-mono text-xs text-rose-300/60">HTTP/WS ⟷ Backend</p>
-                <p className="font-mono text-xs text-rose-300/60">PWM → Servos</p>
-              </div>
+            {/* Capa 3: Hardware */}
+            <ArchCard color="amber" title="Hardware — ESP32" horizontal items={['C++ / Arduino · Firmware', 'BLE GATT (servidor)', '4× SG90 Servomotores · PWM', 'Batería 3.7V · Wi-Fi integrado']} />
+
+            {/* Capa 4: DevOps (siempre al fondo) */}
+            <div className="mt-4 border-t border-border pt-4">
+              <ArchCard color="slate" title="Infraestructura (DevOps)" horizontal items={['Docker + Compose', 'Nginx Proxy Manager', "Let's Encrypt", 'GitHub Actions · CI/CD']} />
             </div>
 
           </div>
@@ -203,15 +192,27 @@ const titleColors: Record<string, string> = {
   slate: 'text-slate-300',
 }
 
-function ArchCard({ color, title, items }: { color: string; title: string; items: string[] }) {
+function ArchCard({ color, title, items, horizontal = false }: {
+  color: string; title: string; items: string[]; horizontal?: boolean
+}) {
   return (
     <div className={`rounded-xl border p-4 ${cardColors[color]}`}>
       <p className={`mb-2 text-xs font-bold ${titleColors[color]}`}>{title}</p>
-      <ul className="space-y-1">
+      <ul className={horizontal ? 'flex flex-wrap gap-x-4 gap-y-1' : 'space-y-1'}>
         {items.map((item) => (
           <li key={item} className="text-xs text-muted">· {item}</li>
         ))}
       </ul>
+    </div>
+  )
+}
+
+function FlowArrow({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-2 px-2">
+      <div className="h-px flex-1 border-t border-dashed border-border" />
+      <span className="font-mono text-xs text-border">{label}</span>
+      <div className="h-px flex-1 border-t border-dashed border-border" />
     </div>
   )
 }
