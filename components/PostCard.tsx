@@ -13,6 +13,11 @@ const projectStyles = {
     dot: 'bg-amber-500',
     cta: 'text-amber-400 group-hover:text-amber-300',
   },
+  'panel-led': {
+    badge: 'bg-emerald-500/10 text-emerald-400',
+    dot: 'bg-emerald-500',
+    cta: 'text-emerald-400 group-hover:text-emerald-300',
+  },
 }
 
 function formatDate(iso: string) {

@@ -22,6 +22,7 @@ export default async function AdminPage() {
 
   const robots = (posts ?? []).filter((p: Post) => p.project === 'robots-bailarines')
   const lego = (posts ?? []).filter((p: Post) => p.project === 'lego-wedo')
+  const panel = (posts ?? []).filter((p: Post) => p.project === 'panel-led')
 
   return (
     <div className="space-y-10">
@@ -36,6 +37,7 @@ export default async function AdminPage() {
         [
           { label: PROJECT_LABELS['robots-bailarines'], items: robots, color: 'text-indigo-400' },
           { label: PROJECT_LABELS['lego-wedo'], items: lego, color: 'text-amber-400' },
+          { label: PROJECT_LABELS['panel-led'], items: panel, color: 'text-emerald-400' },
         ] as { label: string; items: Post[]; color: string }[]
       ).map(({ label, items, color }) => (
         <section key={label}>

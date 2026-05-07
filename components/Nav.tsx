@@ -1,11 +1,13 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import NavAuthButton from './NavAuthButton'
+import MobileMenu from './MobileMenu'
 
 const links = [
   { href: '/', label: 'Inicio' },
-  { href: '/robots-bailarines', label: 'Robots Bailarines 2.0' },
-  { href: '/lego-wedo', label: 'LEGO WeDo 2.0' },
+  { href: '/robots-bailarines', label: 'Robots Bailarines' },
+  { href: '/lego-wedo', label: 'LEGO WeDo' },
+  { href: '/panel-led', label: 'Panel LED' },
   { href: '/recursos', label: 'Recursos' },
   { href: '/equipo', label: 'Equipo' },
 ]
@@ -22,7 +24,9 @@ export default async function Nav() {
         <Link href="/" className="font-mono text-sm font-bold tracking-widest text-white">
           GPT Blog
         </Link>
-        <div className="flex items-center gap-1">
+
+        {/* Desktop */}
+        <div className="hidden items-center gap-1 md:flex">
           {links.map((l) => (
             <Link
               key={l.href}
@@ -51,6 +55,13 @@ export default async function Nav() {
             </Link>
           )}
         </div>
+
+        {/* Mobile */}
+        <MobileMenu
+          links={links}
+          isAdmin={!!user}
+          userEmail={user?.email ?? null}
+        />
       </div>
     </nav>
   )

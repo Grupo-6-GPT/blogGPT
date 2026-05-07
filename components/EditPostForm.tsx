@@ -94,7 +94,7 @@ export default function EditPostForm({ post }: { post: Post }) {
       <div>
         <label className="mb-2 block text-sm font-medium text-[#e2e6f0]">Proyecto</label>
         <div className="flex gap-3">
-          {(['robots-bailarines', 'lego-wedo'] as ProjectSlug[]).map((slug) => (
+          {(['robots-bailarines', 'lego-wedo', 'panel-led'] as ProjectSlug[]).map((slug) => (
             <button
               key={slug}
               type="button"
@@ -103,7 +103,9 @@ export default function EditPostForm({ post }: { post: Post }) {
                 project === slug
                   ? slug === 'robots-bailarines'
                     ? 'border-indigo-500 bg-indigo-500/15 text-indigo-300'
-                    : 'border-amber-500 bg-amber-500/15 text-amber-300'
+                    : slug === 'lego-wedo'
+                    ? 'border-amber-500 bg-amber-500/15 text-amber-300'
+                    : 'border-emerald-500 bg-emerald-500/15 text-emerald-300'
                   : 'border-border bg-bg3 text-muted hover:border-[#353a4f]'
               }`}
             >

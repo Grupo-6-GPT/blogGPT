@@ -29,6 +29,18 @@ const projects = [
     tagStyle: 'text-amber-400',
     trello: null,
   },
+  {
+    href: '/panel-led',
+    slug: 'panel-led' as const,
+    icon: '📟',
+    title: 'Panel LED Scrolleable',
+    desc: 'Panel LED con texto scrolleable controlado desde una Web App — backend REST + ESP32 con módulo MAX7219 y WiFi.',
+    tags: ['ESP32', 'MAX7219', 'React', 'Node.js', 'Arduino'],
+    accent: 'border-emerald-500/60 hover:border-emerald-500',
+    bar: 'bg-emerald-500',
+    tagStyle: 'text-emerald-400',
+    trello: null,
+  },
 ]
 
 export default function HomePage() {
@@ -44,7 +56,7 @@ export default function HomePage() {
           Hub de Proyectos
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-base text-muted sm:text-lg">
-          Seguimiento de avances, especificaciones técnicas y documentación de los dos proyectos del ramo.
+          Seguimiento de avances, especificaciones técnicas y documentación de los proyectos del ramo.
         </p>
         <div className="mt-7 flex flex-wrap justify-center gap-2 text-sm">
           <span className="text-xs text-muted">Equipo:</span>
@@ -67,7 +79,7 @@ export default function HomePage() {
           Proyectos
           <span className="flex-1 border-t border-border" />
         </h2>
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p) => (
             <div
               key={p.href}
