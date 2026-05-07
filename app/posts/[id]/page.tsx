@@ -32,11 +32,17 @@ const projectStyles = {
     back: 'hover:text-amber-400',
     dot: 'bg-amber-500',
   },
+  'panel-led': {
+    badge: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+    back: 'hover:text-emerald-400',
+    dot: 'bg-emerald-500',
+  },
 }
 
 const projectHref: Record<string, string> = {
   'robots-bailarines': '/robots-bailarines',
   'lego-wedo': '/lego-wedo',
+  'panel-led': '/panel-led',
 }
 
 export default async function PostPage({ params }: { params: Promise<{ id: string }> }) {
